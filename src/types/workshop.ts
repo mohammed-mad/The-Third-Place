@@ -1,4 +1,5 @@
-export type WorkshopCategory = "Kintsugi" | "Cyanotype" | "Mosaic Art";
+export type WorkshopCategory = "Kintsugi" | "Cyanotype" | "Mosaic Art" | "Ceramic Painting" | "Pottery" | "Open Studio";
+export type WorkshopGroup = "Craft workshops" | "Ceramic workshops";
 
 export interface WorkshopSession {
   id: string;
@@ -16,20 +17,25 @@ export interface Workshop {
   id: string;
   slug: string;
   title: string;
+  /** Short display title used on cards, e.g. "Kintsugi" */
+  shortTitle: string;
+  /** Handwritten label above the title, e.g. "Craft workshop" */
+  kicker: string;
   category: WorkshopCategory;
+  group: WorkshopGroup;
   tagline: string;
-  /** Display date of the next session, e.g. "Saturday, 17 October" */
-  date: string;
-  /** Display time of the next session */
-  time: string;
-  spotsLeft: number;
+  intro: string;
+  description: string;
+  whatYouWillDo: string[];
+  includes: string[];
+  duration: string;
+  maxParticipants: number;
+  level: "Beginner" | "All levels" | "Intermediate";
   /** Price per participant in EUR */
   price: number;
-  image: string;
-  description: string;
-  highlights: string[];
-  duration: string;
-  level: "Beginner" | "All levels" | "Intermediate";
+  cardImage: string;
+  heroImage: string;
+  gallery: string[];
   sessions: WorkshopSession[];
 }
 
@@ -59,11 +65,27 @@ export interface Testimonial {
   name: string;
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  avatar: string;
+  avatar?: string;
+  /** Relative date label, e.g. "2 weeks ago" */
+  when: string;
 }
 
 export interface GalleryImage {
   id: string;
   src: string;
   alt: string;
+}
+
+export interface JournalPost {
+  id: string;
+  slug: string;
+  title: string;
+  image: string;
+  alt: string;
+}
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
 }

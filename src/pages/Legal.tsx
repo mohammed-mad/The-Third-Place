@@ -1,21 +1,8 @@
-import PageHeader from "@/components/ui/PageHeader";
-
-interface LegalProps {
-  title: "Privacy Policy" | "Terms of Service";
-}
-
-export default function Legal({ title }: LegalProps) {
+export default function Legal({ title }: { title: "Privacy policy" | "Terms & conditions" }) {
   return (
-    <>
-      <PageHeader eyebrow="Legal" title={title} />
-      <section className="bg-ivory py-16">
-        <div className="page-container max-w-3xl font-sans text-[15px] leading-[1.85] text-ink-muted">
-          <p>
-            This page is a placeholder for The Third Place's {title.toLowerCase()}. Final wording will be provided by the
-            studio before launch.
-          </p>
-        </div>
-      </section>
-    </>
+    <section className="page-container pb-20 pt-[200px]">
+      <h1 className="display text-[44px] leading-[1] text-green lg:text-[56px]">{title}</h1>
+      <p className="mt-6 max-w-3xl font-sans text-body text-green-olive">This page is a placeholder for The Third Place's {title.toLowerCase()}. Final wording will be provided by the studio before launch.</p>
+    </section>
   );
 }

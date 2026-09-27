@@ -1,17 +1,13 @@
-import PageHeader from "@/components/ui/PageHeader";
 import Button from "@/components/ui/Button";
 
 export default function NotFound() {
   return (
-    <>
-      <PageHeader eyebrow="404" title="Page not found" description="The page you're looking for doesn't exist or has moved." />
-      <section className="bg-ivory py-16">
-        <div className="page-container">
-          <Button to="/" arrow>
-            Back to the homepage
-          </Button>
-        </div>
-      </section>
-    </>
+    <section className="page-container pb-20 pt-[200px]">
+      <h1 className="display text-[44px] leading-[1] text-green lg:text-[56px]">Page not found</h1>
+      <p className="mt-4 font-sans text-body text-green-olive">The page you're looking for doesn't exist or has moved.</p>
+      <Button to="/" arrow className="mt-8">
+        Back to the homepage
+      </Button>
+    </section>
   );
 }

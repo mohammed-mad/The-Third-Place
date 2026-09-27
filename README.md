@@ -1,10 +1,15 @@
-# The Third Place — Creative Workshop Studio
+# The Third Place — Craft & Ceramic Workshops
 
-Landing page and workshop-booking front end for The Third Place, a creative
-workshop studio (Kintsugi, Cyanotype, Mosaic Art) in Casablanca.
+Website and workshop-booking front end for The Third Place, a creative
+workshop studio in Casablanca (Kintsugi, Cyanotype, Mosaic Art, ceramic
+painting, hand-built pottery and open studio evenings).
 
 Built with **React 18 + TypeScript + Tailwind CSS**, routed with React Router,
 icons from Lucide. No UI component library.
+
+This branch (`claude/sarena-redesign`) re-implements the site on the layout,
+typography and colour system of sarenaskeuken.nl, adapted to The Third Place's
+content, and adds WhatsApp booking plus add-to-calendar links.
 
 ## Getting started
 
@@ -15,23 +20,39 @@ npm run build    # typecheck + production build into dist/
 npm run preview  # serve the production build
 ```
 
+## Booking flow
+
+There is no checkout. Each workshop page (and `/booking/:slug`) has a booking
+panel where the visitor picks a date, the number of people and optionally their
+name, then:
+
+- **Book via WhatsApp** opens `wa.me/<studio number>` with a pre-filled message
+  containing the workshop, date, time and group size. The studio confirms and
+  sends a payment link in the chat.
+- **Add to Google Calendar** opens a pre-filled Google Calendar event for the
+  chosen session (Africa/Casablanca time, studio address as location).
+- **Apple / Outlook (.ics)** downloads an iCalendar file for the same session.
+
+The helpers live in `src/lib/booking-links.ts`; the studio's WhatsApp number,
+address and socials are in `src/data/site.ts`.
+
 ## Structure
 
 ```
 src/
-├── assets/          images (hero, workshops, studio, gallery, cta, testimonials), fonts, logo
+├── assets/          images, self-hosted fonts, logo
 ├── components/
-│   ├── layout/      Navbar, Footer, Layout (route shell)
-│   ├── home/        Hero, Benefits, WorkshopSection, WorkshopCard, StudioSection,
-│   │                Gallery, Testimonials, BookingCTA
-│   ├── booking/     SessionSelector, ParticipantsSelector, BookingSummary
-│   └── ui/          Button, SectionHeading, Logo, StarRating, BotanicalIllustration, PageHeader
-├── data/            workshops, testimonials, gallery, navigation (content lives here)
-├── lib/             booking logic, formatting helpers, mock API layer
-├── pages/           Home, Workshops, WorkshopDetails, Booking, About, Gallery, Contact, Legal, NotFound
-├── types/           Workshop, WorkshopSession, Booking, Testimonial, GalleryImage
-├── App.tsx          routes
-└── index.css        @font-face declarations + Tailwind layers
+│   ├── layout/      Navbar, Footer, Layout
+│   ├── home/        Hero, UspStrip, WorkshopsSlider, StudioSection, Reviews, Journal
+│   ├── booking/     BookingPanel (dates, participants, WhatsApp + calendar)
+│   └── ui/          Button, Logo, ScriptTitle, SectionTitle, Carousel, WorkshopCard,
+│                    ReviewsBlock, FaqList, ContactInfoCard, NewsletterForm, InfoStats, PageHero
+├── data/            workshops, site, testimonials, journal, faq, gallery
+├── lib/             booking logic, booking links, formatting
+├── pages/           Home, Workshops, WorkshopDetails, Booking, PrivateWorkshops,
+│                    About, Gallery, Contact, Legal, NotFound
+├── types/           Workshop, WorkshopSession, Booking, Testimonial, JournalPost, FaqItem
+└── index.css        @font-face declarations, Tailwind layers, shared patterns
 ```
 
 ### Routes
@@ -39,30 +60,26 @@ src/
 | Path | Page |
 | --- | --- |
 | `/` | Homepage |
-| `/workshops` | All workshops |
-| `/workshops/:slug` | Workshop detail: sessions, date/time, participants, price, total |
-| `/booking/:slug` | Booking flow: details → payment placeholder → confirmation |
+| `/workshops` | Craft and ceramic workshop carousels, upcoming dates, private workshops |
+| `/workshops/:slug` | Workshop detail with WhatsApp booking and calendar links |
+| `/booking/:slug` | Stand-alone booking panel with contact details |
+| `/private-workshops` | Private / group workshop request form |
 | `/about`, `/gallery`, `/contact` | Secondary pages |
 
 ## Design system
 
-Tokens live in `tailwind.config.ts`: the forest-green / ivory / cream palette,
-the EB Garamond (headings) and DM Sans (body) type stacks, pill/card/panel
-radii and the card/nav/panel shadows. Fonts are self-hosted from
-`src/assets/fonts`. Reusable patterns (`page-container`, `eyebrow`) are in
-`src/index.css`.
-
-## Booking & API
-
-Booking state is local React state. `src/lib/booking.ts` holds the pure
-logic (totals, participant limits, draft creation) and `src/lib/api.ts` is a
-thin async layer over the mock data; replace its bodies with real `fetch`
-calls when a backend exists. The payment step is a placeholder intended for
-Stripe Checkout or a similar provider. No payment is processed.
+Tokens are in `tailwind.config.ts`: beige page backgrounds, dark-green text,
+tomato and orange accents, the condensed display face, the handwritten label
+face and the geometric body face. The reference site uses the commercial fonts
+Hesland Sans Rough and Ambit; this build ships the closest open fonts
+(Oswald, Caveat, Manrope) self-hosted from `src/assets/fonts`. To use the
+originals, licence them, drop the files into that folder and add them to the
+`@font-face` rules at the top of `src/index.css`; the font stacks already list
+them first.
 
 ## Imagery
 
-Photos are extracted from the design reference so compositions match it
-exactly. They are stored at 2× the reference resolution; swap them for the
-studio's own photography in `src/assets/images` (same file names) when
-available.
+Photos are derived from the original design reference for The Third Place and
+adapted to the new layout. Several are upscaled from a small source, so swap
+them for the studio's own photography in `src/assets/images` (same file names)
+when available.

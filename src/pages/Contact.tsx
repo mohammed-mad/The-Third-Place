@@ -1,78 +1,45 @@
 import { type FormEvent, useState } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
-import PageHeader from "@/components/ui/PageHeader";
 import Button from "@/components/ui/Button";
-import { siteContact } from "@/data/navigation";
+import ContactInfoCard from "@/components/ui/ContactInfoCard";
+import FaqList from "@/components/ui/FaqList";
+import PageHero from "@/components/ui/PageHero";
+import { faqItems } from "@/data/faq";
+import heroImage from "@/assets/images/gallery/gallery-2.jpg";
 
-const inputClasses =
-  "w-full rounded-[10px] border border-line bg-white px-4 py-3 font-sans text-[15px] text-ink placeholder:text-ink-faint focus:border-forest focus:outline-none";
+const field = "w-full border-b border-green/25 bg-transparent py-2 font-sans text-[15px] text-green placeholder:text-green/40 focus:border-tomato focus:outline-none";
+const label = "block font-sans text-[14px] font-bold text-green";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSent(true);
-  };
-
   return (
     <>
-      <PageHeader
-        eyebrow="Contact"
-        title="Get in touch"
-        description="Questions about a workshop, a private group session or a gift voucher? We'd love to hear from you."
-      />
-      <section className="bg-ivory py-16 lg:py-20">
-        <div className="page-container grid grid-cols-1 gap-12 lg:grid-cols-[380px_1fr] lg:gap-20">
-          <div>
-            <h2 className="font-serif text-[30px] font-medium text-ink">Visit the studio</h2>
-            <ul className="mt-6 space-y-4 font-sans text-[15px] text-ink">
-              <li className="flex items-center gap-3">
-                <MapPin className="h-[18px] w-[18px] text-forest" aria-hidden="true" /> {siteContact.address}
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-[18px] w-[18px] text-forest" aria-hidden="true" />
-                <a href={`mailto:${siteContact.email}`} className="transition hover:text-forest">
-                  {siteContact.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-[18px] w-[18px] text-forest" aria-hidden="true" />
-                <a href={`tel:${siteContact.phone.replace(/\s/g, "")}`} className="transition hover:text-forest">
-                  {siteContact.phone}
-                </a>
-              </li>
-            </ul>
-            <p className="mt-8 font-sans text-[14.5px] leading-[1.8] text-ink-muted">
-              Private workshops for teams, birthdays and celebrations are available on request. Tell us a little about
-              your group and we'll put together a session for you.
-            </p>
-          </div>
+      <PageHero image={heroImage} imageAlt="Cyanotype prints drying on a line" kicker="Contact" title="Let's talk" minHeight="min-h-[420px] lg:min-h-[520px]" />
 
-          <form onSubmit={handleSubmit} className="space-y-5 rounded-panel border border-line bg-white p-6 shadow-card lg:p-8">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <label className="block">
-                <span className="mb-2 block font-sans text-[13px] font-medium text-ink">Name</span>
-                <input required className={inputClasses} autoComplete="name" />
-              </label>
-              <label className="block">
-                <span className="mb-2 block font-sans text-[13px] font-medium text-ink">Email</span>
-                <input required type="email" className={inputClasses} autoComplete="email" />
-              </label>
+      <section className="page-container py-14 lg:py-20">
+        <p className="mx-auto max-w-[720px] text-center font-sans text-[16px] leading-[26px] text-green-olive">
+          Questions about a workshop, a gift voucher or a private session? Send us a message and we'll get back to you within two working days. <strong className="text-green">The fastest way to reach us is WhatsApp.</strong>
+        </p>
+        <div className="relative mx-auto mt-12 grid max-w-[1160px] grid-cols-1 gap-8 lg:grid-cols-[300px_1fr] lg:gap-0">
+          <ContactInfoCard className="relative z-10 lg:mt-12 lg:mr-[-40px] lg:self-start" />
+          <form onSubmit={(e: FormEvent) => { e.preventDefault(); setSent(true); }} className="bg-beige-dark p-8 lg:p-16 lg:pl-[120px]">
+            <div className="space-y-6">
+              <label className={label}>Name<input required className={field} autoComplete="name" /></label>
+              <label className={label}>E-mail<input required type="email" className={field} autoComplete="email" /></label>
+              <label className={label}>Message<textarea required rows={4} className={field} /></label>
             </div>
-            <label className="block">
-              <span className="mb-2 block font-sans text-[13px] font-medium text-ink">Message</span>
-              <textarea required rows={5} className={inputClasses} />
-            </label>
-            <Button type="submit" arrow>
-              Send Message
-            </Button>
+            <Button type="submit" size="sm" className="mt-8">Send</Button>
             {sent && (
-              <p className="font-sans text-[14px] text-forest" role="status">
-                Thank you — we'll get back to you within two working days.
+              <p className="mt-4 font-sans text-[15px] text-green" role="status">
+                Thank you – we'll get back to you within two working days.
               </p>
             )}
           </form>
+        </div>
+      </section>
+
+      <section className="page-container pb-20">
+        <div className="mx-auto max-w-[1160px]">
+          <FaqList items={faqItems} />
         </div>
       </section>
     </>

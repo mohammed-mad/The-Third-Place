@@ -1,53 +1,40 @@
 import { Link } from "react-router-dom";
 
 interface LogoProps {
-  /** "dark" for light backgrounds, "light" for the forest-green footer */
-  tone?: "dark" | "light";
+  tone?: "light" | "dark";
+  /** Height in px; the badge keeps its proportions */
+  size?: number;
   className?: string;
-  iconClassName?: string;
-  textClassName?: string;
 }
 
-/** Brand mark: an arched studio window with a small tree inside. */
-export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
+/**
+ * Circular hand-drawn style badge: arched studio window with a small tree,
+ * the wordmark on two lines and "Casablanca" underneath.
+ */
+export default function Logo({ tone = "dark", size = 140, className = "" }: LogoProps) {
+  const color = tone === "dark" ? "text-green" : "text-white";
   return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M8 36V17a12 12 0 0 1 24 0v19" />
-      <path d="M5.5 36h29" />
-      <path d="M11.5 36V18.5a8.5 8.5 0 0 1 17 0V36" strokeWidth="1.1" opacity="0.7" />
-      <path d="M20 33V15" />
-      <path d="M20 20c-2.6-.4-5-2.8-5.4-5.6 2.8.4 5 2.8 5.4 5.6Z" />
-      <path d="M20 25c2.6-.4 5-2.8 5.4-5.6-2.8.4-5 2.8-5.4 5.6Z" />
-      <path d="M20 29c-2.2-.3-4.2-2.3-4.6-4.8 2.4.4 4.3 2.4 4.6 4.8Z" />
-    </svg>
-  );
-}
-
-export default function Logo({
-  tone = "dark",
-  className = "",
-  iconClassName = "h-9 w-9",
-  textClassName = "text-[19px]",
-}: LogoProps) {
-  const color = tone === "dark" ? "text-forest" : "text-ivory";
-  const text = tone === "dark" ? "text-ink" : "text-ivory";
-  return (
-    <Link to="/" className={["inline-flex items-center gap-2.5", className].join(" ")} aria-label="The Third Place — home">
-      <span className={color}>
-        <LogoMark className={iconClassName} />
-      </span>
-      <span className={["font-serif font-medium leading-none tracking-[0.005em]", text, textClassName].join(" ")}>
-        The Third Place
-      </span>
+    <Link to="/" aria-label="The Third Place — home" className={["inline-block shrink-0", color, className].join(" ")}>
+      <svg viewBox="0 0 140 140" width={size} height={size} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M70 6c35 0 63 28 63 64s-28 64-63 64S7 106 7 70 35 6 70 6Z" strokeWidth="2.6" strokeDasharray="1 0 340 0 8 0 40" />
+        <path d="M70 12c31 0 57 25 57 58s-26 58-57 58S13 103 13 70 39 12 70 12Z" strokeWidth="1" opacity="0.55" strokeDasharray="60 6 120 4 90 8" />
+        {/* arch + tree mark */}
+        <path d="M58 46V34a12 12 0 0 1 24 0v12" strokeWidth="2.2" />
+        <path d="M55 46h30" strokeWidth="2.2" />
+        <path d="M70 44V24" strokeWidth="2" />
+        <path d="M70 30c-2.6-.4-4.8-2.6-5.2-5.2 2.8.4 5 2.6 5.2 5.2Z" strokeWidth="1.6" />
+        <path d="M70 35c2.6-.4 4.8-2.6 5.2-5.2-2.8.4-5 2.6-5.2 5.2Z" strokeWidth="1.6" />
+        <text x="70" y="76" textAnchor="middle" fill="currentColor" stroke="none" fontFamily="Oswald, 'Hesland Sans Rough', Impact, sans-serif" fontWeight="600" fontSize="22" letterSpacing="0.5">
+          THE THIRD
+        </text>
+        <text x="70" y="99" textAnchor="middle" fill="currentColor" stroke="none" fontFamily="Oswald, 'Hesland Sans Rough', Impact, sans-serif" fontWeight="600" fontSize="22" letterSpacing="0.5">
+          PLACE
+        </text>
+        <path d="M46 108h48" strokeWidth="1.2" strokeDasharray="2 3" />
+        <text x="70" y="121" textAnchor="middle" fill="currentColor" stroke="none" fontFamily="Manrope, Ambit, sans-serif" fontWeight="700" fontSize="7.5" letterSpacing="2.4">
+          CASABLANCA
+        </text>
+      </svg>
     </Link>
   );
 }
