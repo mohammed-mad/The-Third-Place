@@ -20,6 +20,25 @@ npm run build    # typecheck + production build into dist/
 npm run preview  # serve the production build
 ```
 
+## Languages
+
+The site is bilingual (English / French). An EN | FR switcher sits in the top
+navigation on desktop and next to the menu button on mobile. The choice is
+remembered in `localStorage` and the browser language picks the default on the
+first visit.
+
+- UI copy lives in `src/i18n/translations.ts` as two typed dictionaries
+  (`en` and `fr` must have the same keys, so a missing translation fails the
+  typecheck).
+- Content (workshops, FAQ, journal posts, reviews, gallery alt text) is
+  authored with `{ en, fr }` fields in `src/data/*` and resolved for the active
+  language by the hooks in `src/i18n/useLocalizedData.ts`.
+- Dates, the WhatsApp message and the calendar event text follow the active
+  language as well.
+
+To add a language, extend the `Lang` type, add a dictionary to `translations`,
+add the language to `languages`, and add the new key to every `{ en, fr }` field.
+
 ## Booking flow
 
 There is no checkout. Each workshop page (and `/booking/:slug`) has a booking

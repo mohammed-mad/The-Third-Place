@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
-import { journalPosts } from "@/data/journal";
+import { useT } from "@/i18n/LanguageContext";
+import { useJournalPosts } from "@/i18n/useLocalizedData";
 
 export default function Journal() {
+  const t = useT();
+  const posts = useJournalPosts();
   return (
     <section className="bg-beige-dark py-16 lg:pt-[72px] lg:pb-[104px]" aria-labelledby="home-journal">
       <div className="page-container">
-        <SectionTitle as="h2" accent="studio" align="center">
-          Latest from the studio
+        <SectionTitle as="h2" accent={t.home.journalAccent} align="center">
+          {t.home.journalTitle}
         </SectionTitle>
         <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {journalPosts.map((post) => (
+          {posts.map((post) => (
             <li key={post.id}>
               <Link to="/gallery" className="group block bg-white transition duration-300 hover:-translate-y-1 hover:shadow-card">
                 <div className="aspect-[308/232] overflow-hidden">
@@ -24,7 +27,7 @@ export default function Journal() {
         </ul>
         <div className="mt-10 text-center">
           <Button to="/gallery" variant="secondary">
-            All stories
+            {t.common.allStories}
           </Button>
         </div>
       </div>

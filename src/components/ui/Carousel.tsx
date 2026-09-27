@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useT } from "@/i18n/LanguageContext";
 
 interface CarouselProps {
   children: ReactNode[];
@@ -14,6 +15,7 @@ interface CarouselProps {
 
 /** Horizontal scroll-snap track with round arrow buttons and dot indicators. */
 export default function Carousel({ children, ariaLabel, step = 444, className = "", gapClassName = "gap-6", arrows = "sides" }: CarouselProps) {
+  const t = useT();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
@@ -48,7 +50,7 @@ export default function Carousel({ children, ariaLabel, step = 444, className = 
   return (
     <div className={["relative", className].join(" ")}>
       {arrows === "sides" && (
-        <button type="button" onClick={() => scroll(-1)} disabled={!canPrev} className={[arrowClass, "-left-6"].join(" ")} aria-label="Previous">
+        <button type="button" onClick={() => scroll(-1)} disabled={!canPrev} className={[arrowClass, "-left-6"].join(" ")} aria-label={t.common.previous}>
           <ChevronLeft className="h-5 w-5" strokeWidth={2.2} />
         </button>
       )}
@@ -56,7 +58,7 @@ export default function Carousel({ children, ariaLabel, step = 444, className = 
         {children}
       </div>
       {arrows === "sides" && (
-        <button type="button" onClick={() => scroll(1)} disabled={!canNext} className={[arrowClass, "-right-6"].join(" ")} aria-label="Next">
+        <button type="button" onClick={() => scroll(1)} disabled={!canNext} className={[arrowClass, "-right-6"].join(" ")} aria-label={t.common.next}>
           <ChevronRight className="h-5 w-5" strokeWidth={2.2} />
         </button>
       )}

@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import NewsletterForm from "@/components/ui/NewsletterForm";
-import { legalLinks, navLinks, site } from "@/data/site";
+import { getLegalLinks, getNavLinks, site } from "@/data/site";
+import { useT } from "@/i18n/LanguageContext";
 
 export default function Footer() {
+  const t = useT();
+  const navLinks = getNavLinks(t);
+  const legalLinks = getLegalLinks(t);
+
   return (
     <footer className="rough-edge-top mt-[14px] bg-green text-white">
       <div className="bg-dots-light bg-dots">
@@ -15,9 +20,9 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="font-sans text-label uppercase text-white">Menu</h3>
+              <h3 className="font-sans text-label uppercase text-white">{t.footer.menu}</h3>
               <ul className="mt-1">
-                {[...navLinks, { label: "Contact", to: "/contact" }].map((link) => (
+                {[...navLinks, { label: t.nav.contact, to: "/contact" }].map((link) => (
                   <li key={link.label}>
                     <Link to={link.to} className="block pb-2 font-sans text-body text-white transition hover:text-orange">
                       {link.label}
@@ -28,7 +33,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="font-sans text-label uppercase text-white">Location</h3>
+              <h3 className="font-sans text-label uppercase text-white">{t.footer.location}</h3>
               <p className="mt-1 font-sans text-body text-white">
                 {site.addressLines.map((line) => (
                   <span key={line} className="block">
@@ -36,14 +41,14 @@ export default function Footer() {
                   </span>
                 ))}
                 <a href={site.mapsUrl} target="_blank" rel="noreferrer" className="text-orange transition hover:text-orange-light">
-                  Get directions
+                  {t.footer.getDirections}
                 </a>
               </p>
             </div>
 
             <div className="lg:max-w-[472px]">
-              <h3 className="font-sans text-h3 text-white">Sign up for the newsletter</h3>
-              <p className="mt-2 font-sans text-body text-white/70">Be the first to hear about new workshops in your inbox. New dates are announced on the last Tuesday of every month.</p>
+              <h3 className="font-sans text-h3 text-white">{t.footer.newsletterTitle}</h3>
+              <p className="mt-2 font-sans text-body text-white/70">{t.footer.newsletterText}</p>
               <NewsletterForm className="mt-4" />
             </div>
           </div>
@@ -65,7 +70,7 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="px-4 font-sans text-tiny uppercase text-white/50">© 2026 {site.name}</li>
+              <li className="px-4 font-sans text-tiny uppercase text-white/50">{t.footer.rights}</li>
             </ul>
           </div>
         </div>

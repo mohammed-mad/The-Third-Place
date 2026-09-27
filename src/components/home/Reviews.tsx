@@ -1,8 +1,10 @@
 import ReviewsBlock from "@/components/ui/ReviewsBlock";
+import { useT } from "@/i18n/LanguageContext";
 
 export default function Reviews() {
+  const t = useT();
   return (
-    <section className="relative overflow-hidden py-16 lg:pt-[110px] lg:pb-[150px]" aria-label="Reviews">
+    <section className="relative overflow-hidden py-16 lg:pt-[110px] lg:pb-[150px]" aria-label={t.home.reviewsAria}>
       <svg viewBox="0 0 320 240" className="pointer-events-none absolute -bottom-6 left-0 hidden h-[240px] w-auto text-green-olive/70 lg:block" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M20 236C70 170 120 120 200 60" />
         <path d="M120 130c-14-30 10-60 36-58-4 26-18 48-36 58Z" />

@@ -1,5 +1,5 @@
 export type WorkshopCategory = "Kintsugi" | "Cyanotype" | "Mosaic Art" | "Ceramic Painting" | "Pottery" | "Open Studio";
-export type WorkshopGroup = "Craft workshops" | "Ceramic workshops";
+export type WorkshopGroup = "craft" | "ceramic";
 
 export interface WorkshopSession {
   id: string;
@@ -30,7 +30,7 @@ export interface Workshop {
   includes: string[];
   duration: string;
   maxParticipants: number;
-  level: "Beginner" | "All levels" | "Intermediate";
+  level: string;
   /** Price per participant in EUR */
   price: number;
   cardImage: string;
@@ -88,4 +88,32 @@ export interface FaqItem {
   id: string;
   question: string;
   answer: string;
+}
+
+/** Text fields of a workshop that exist in every language. */
+export type WorkshopTextFields = "title" | "shortTitle" | "kicker" | "tagline" | "intro" | "description" | "duration" | "level";
+export type WorkshopListFields = "whatYouWillDo" | "includes";
+
+export type LocalizedString = Record<"en" | "fr", string>;
+export type LocalizedList = Record<"en" | "fr", string[]>;
+
+/** Workshop as authored: text in every language, resolved to `Workshop` for the active one. */
+export type WorkshopSource = Omit<Workshop, WorkshopTextFields | WorkshopListFields> &
+  Record<WorkshopTextFields, LocalizedString> &
+  Record<WorkshopListFields, LocalizedList>;
+
+export interface TestimonialSource extends Omit<Testimonial, "quote" | "when"> {
+  quote: LocalizedString;
+  when: LocalizedString;
+}
+
+export interface JournalPostSource extends Omit<JournalPost, "title" | "alt"> {
+  title: LocalizedString;
+  alt: LocalizedString;
+}
+
+export interface FaqItemSource {
+  id: string;
+  question: LocalizedString;
+  answer: LocalizedString;
 }

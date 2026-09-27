@@ -1,19 +1,22 @@
+import type { Translation } from "@/i18n/translations";
+
 export interface NavLink {
   label: string;
   to: string;
 }
 
-export const navLinks: NavLink[] = [
-  { label: "Workshops", to: "/workshops" },
-  { label: "The studio", to: "/about" },
-  { label: "Private workshops", to: "/private-workshops" },
-  { label: "Gallery", to: "/gallery" },
-  { label: "About us", to: "/about" },
+/** Primary navigation, labelled in the active language. */
+export const getNavLinks = (t: Translation): NavLink[] => [
+  { label: t.nav.workshops, to: "/workshops" },
+  { label: t.nav.studio, to: "/about" },
+  { label: t.nav.privateWorkshops, to: "/private-workshops" },
+  { label: t.nav.gallery, to: "/gallery" },
+  { label: t.nav.about, to: "/about" },
 ];
 
-export const legalLinks: NavLink[] = [
-  { label: "Terms & conditions", to: "/terms" },
-  { label: "Privacy policy", to: "/privacy" },
+export const getLegalLinks = (t: Translation): NavLink[] => [
+  { label: t.footer.terms, to: "/terms" },
+  { label: t.footer.privacy, to: "/privacy" },
 ];
 
 export const site = {

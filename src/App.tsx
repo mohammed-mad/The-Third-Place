@@ -24,8 +24,8 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<Legal title="Privacy policy" />} />
-          <Route path="/terms" element={<Legal title="Terms & conditions" />} />
+          <Route path="/privacy" element={<Legal kind="privacy" />} />
+          <Route path="/terms" element={<Legal kind="terms" />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

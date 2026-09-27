@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import type { FaqItem } from "@/types/workshop";
+import { useT } from "@/i18n/LanguageContext";
 
 interface FaqListProps {
   items: FaqItem[];
   title?: string;
 }
 
-export default function FaqList({ items, title = "Frequently asked questions" }: FaqListProps) {
+export default function FaqList({ items, title }: FaqListProps) {
+  const t = useT();
   const [open, setOpen] = useState<string | null>(null);
+  const heading = title ?? t.contactPage.faqTitle;
   return (
     <div>
-      <h2 className="font-sans text-h3 text-green">{title}</h2>
+      <h2 className="font-sans text-h3 text-green">{heading}</h2>
       <ul className="mt-4 border-t border-green/15">
         {items.map((item) => {
           const expanded = open === item.id;
