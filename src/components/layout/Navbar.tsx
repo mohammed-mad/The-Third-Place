@@ -24,16 +24,16 @@ export default function Navbar() {
           <Logo tone={onDarkHero ? "light" : "dark"} size={140} className="hidden lg:inline-block" />
         </div>
 
-        <nav aria-label="Primary" className="hidden items-center bg-white lg:flex">
+        <nav aria-label="Primary" className="hidden items-stretch bg-white lg:flex">
           {navLinks.map((link) => (
-            <NavLink key={link.label} to={link.to} className={({ isActive }) => ["px-[18px] py-4 font-sans text-[17px] leading-[28px] text-green transition hover:text-tomato xl:px-[21px] xl:text-[17.6px]", isActive ? "text-tomato" : ""].join(" ")}>
+            <NavLink key={link.label} to={link.to} className={({ isActive }) => ["flex items-center px-[18px] py-4 font-sans text-[17px] leading-[28px] text-green transition hover:text-tomato xl:px-[21px] xl:text-[17.6px]", isActive ? "text-tomato" : ""].join(" ")}>
               {link.label}
             </NavLink>
           ))}
-          <LanguageSwitcher variant="bar" />
-          <NavLink to="/contact" className="bg-green px-4 py-4 font-sans text-[17px] leading-[28px] text-white transition hover:bg-tomato xl:text-[17.6px]">
+          <NavLink to="/contact" className="flex items-center bg-green px-4 py-4 font-sans text-[17px] leading-[28px] text-white transition hover:bg-tomato xl:text-[17.6px]">
             {t.nav.contact}
           </NavLink>
+          <LanguageSwitcher variant="toggle" />
         </nav>
 
         <div className="mt-4 flex items-center gap-2 lg:hidden">
