@@ -11,10 +11,16 @@ interface CarouselProps {
   gapClassName?: string;
   /** Where the next/previous buttons sit */
   arrows?: "sides" | "none";
+  /** Extra classes for the previous / next buttons (positioning) */
+  prevClassName?: string;
+  nextClassName?: string;
+  /** Extra classes for the scroll track (e.g. trailing padding when it bleeds off-screen) */
+  trackClassName?: string;
+  showDots?: boolean;
 }
 
 /** Horizontal scroll-snap track with round arrow buttons and dot indicators. */
-export default function Carousel({ children, ariaLabel, step = 444, className = "", gapClassName = "gap-6", arrows = "sides" }: CarouselProps) {
+export default function Carousel({ children, ariaLabel, step = 444, className = "", gapClassName = "gap-6", arrows = "sides", prevClassName = "-left-6", nextClassName = "-right-6", trackClassName = "", showDots = true }: CarouselProps) {
   const t = useT();
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -50,19 +56,19 @@ export default function Carousel({ children, ariaLabel, step = 444, className = 
   return (
     <div className={["relative", className].join(" ")}>
       {arrows === "sides" && (
-        <button type="button" onClick={() => scroll(-1)} disabled={!canPrev} className={[arrowClass, "-left-6"].join(" ")} aria-label={t.common.previous}>
+        <button type="button" onClick={() => scroll(-1)} disabled={!canPrev} className={[arrowClass, prevClassName].join(" ")} aria-label={t.common.previous}>
           <ChevronLeft className="h-5 w-5" strokeWidth={2.2} />
         </button>
       )}
-      <div ref={trackRef} role="region" aria-label={ariaLabel} className={["no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2", gapClassName].join(" ")}>
+      <div ref={trackRef} role="region" aria-label={ariaLabel} className={["no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2", gapClassName, trackClassName].join(" ")}>
         {children}
       </div>
       {arrows === "sides" && (
-        <button type="button" onClick={() => scroll(1)} disabled={!canNext} className={[arrowClass, "-right-6"].join(" ")} aria-label={t.common.next}>
+        <button type="button" onClick={() => scroll(1)} disabled={!canNext} className={[arrowClass, nextClassName].join(" ")} aria-label={t.common.next}>
           <ChevronRight className="h-5 w-5" strokeWidth={2.2} />
         </button>
       )}
-      {count > 1 && (
+      {showDots && count > 1 && (
         <div className="mt-4 flex justify-center gap-[6px]" aria-hidden="true">
           {children.map((_, i) => (
             <span key={i} className={["h-[6px] w-[6px] rounded-full transition", i === index ? "bg-green" : "bg-green/30"].join(" ")} />
