@@ -10,10 +10,10 @@ export default function Hero() {
     <header className="relative isolate min-h-[640px] overflow-hidden bg-green lg:h-[818px]">
       <img src={heroImage} alt={t.home.heroAlt} className="absolute inset-0 h-full w-full object-cover object-[65%_center] lg:object-center" fetchPriority="high" />
       <div className="absolute inset-0 bg-black/35" aria-hidden="true" />
-      <div className="page-container relative flex h-full min-h-[640px] flex-col justify-end pb-16 pt-40 lg:min-h-0 lg:justify-start lg:pb-0 lg:pt-[182px]">
-        <div className="flex max-w-[600px] flex-col items-center text-center lg:ml-[44px]">
+      <div className="relative flex h-full min-h-[640px] flex-col justify-end px-4 pb-16 pt-40 sm:px-6 lg:min-h-0 lg:justify-start lg:px-10 lg:pb-0 lg:pt-[182px]">
+        <div className="flex w-full max-w-[600px] flex-col items-center text-center lg:ml-[44px]">
           <ScriptTitle as="p">{t.home.welcome}</ScriptTitle>
-          <h1 className="display mt-3 text-[44px] leading-[44px] text-white sm:text-[56px] sm:leading-[56px] lg:text-[66px] lg:leading-[66px]">
+          <h1 className="display mt-3 text-[44px] leading-[44px] text-white sm:text-[56px] sm:leading-[56px] lg:text-[72px] lg:leading-[72px]">
             {t.home.titleLines.map((line, index) => (
               <Fragment key={line}>
                 {index > 0 && " "}
