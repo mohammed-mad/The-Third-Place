@@ -1,0 +1,96 @@
+@font-face {
+  font-family: 'DM Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url('./assets/fonts/dm-sans-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url('./assets/fonts/dm-sans-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url('./assets/fonts/dm-sans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url('./assets/fonts/dm-sans-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/eb-garamond-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/eb-garamond-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/eb-garamond-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/eb-garamond-600.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-forest text-ivory;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-forest ring-offset-2 ring-offset-ivory;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-[52px];
+  }
+  .eyebrow {
+    @apply font-sans text-eyebrow uppercase;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
