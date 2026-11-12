@@ -4,14 +4,21 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export default function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    if (hash) {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-ivory">
+    <div className="relative flex min-h-screen flex-col bg-beige">
       <Navbar />
       <main className="flex-1">
         <Outlet />

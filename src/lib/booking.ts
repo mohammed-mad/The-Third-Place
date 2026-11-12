@@ -1,20 +1,21 @@
 import type { Booking, BookingCustomer, Workshop, WorkshopSession } from "@/types/workshop";
 
-export const MAX_PARTICIPANTS = 8;
-
 export interface BookingDraft {
   workshop: Workshop;
   session: WorkshopSession;
   participants: number;
 }
 
-export const calculateTotal = (pricePerParticipant: number, participants: number): number =>
-  pricePerParticipant * participants;
+export const calculateTotal = (pricePerParticipant: number, participants: number): number => pricePerParticipant * participants;
 
-export const clampParticipants = (value: number, session: WorkshopSession | undefined): number => {
-  const max = Math.min(MAX_PARTICIPANTS, session?.spotsLeft ?? MAX_PARTICIPANTS);
-  return Math.min(Math.max(1, value), Math.max(1, max));
-};
+export const maxParticipantsFor = (workshop: Workshop, session: WorkshopSession | null | undefined): number =>
+  Math.max(1, Math.min(workshop.maxParticipants, session?.spotsLeft ?? workshop.maxParticipants));
+
+export const clampParticipants = (value: number, workshop: Workshop, session: WorkshopSession | null | undefined): number =>
+  Math.min(Math.max(1, Math.floor(value) || 1), maxParticipantsFor(workshop, session));
+
+export const firstAvailableSession = (workshop: Workshop): WorkshopSession | null =>
+  workshop.sessions.find((session) => session.spotsLeft > 0) ?? null;
 
 export const createDraftBooking = ({ workshop, session, participants }: BookingDraft): Booking => ({
   id: `bk_${Date.now().toString(36)}`,
@@ -27,8 +28,4 @@ export const createDraftBooking = ({ workshop, session, participants }: BookingD
   createdAt: new Date().toISOString(),
 });
 
-export const attachCustomer = (booking: Booking, customer: BookingCustomer): Booking => ({
-  ...booking,
-  customer,
-  status: "pending_payment",
-});
+export const attachCustomer = (booking: Booking, customer: BookingCustomer): Booking => ({ ...booking, customer, status: "pending_payment" });

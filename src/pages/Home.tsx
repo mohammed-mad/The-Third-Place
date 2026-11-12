@@ -1,21 +1,19 @@
 import Hero from "@/components/home/Hero";
-import Benefits from "@/components/home/Benefits";
-import WorkshopSection from "@/components/home/WorkshopSection";
+import UspStrip from "@/components/home/UspStrip";
+import WorkshopsSlider from "@/components/home/WorkshopsSlider";
 import StudioSection from "@/components/home/StudioSection";
-import Gallery from "@/components/home/Gallery";
-import Testimonials from "@/components/home/Testimonials";
-import BookingCTA from "@/components/home/BookingCTA";
+import Reviews from "@/components/home/Reviews";
+import Journal from "@/components/home/Journal";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Benefits />
-      <WorkshopSection />
+      <UspStrip />
+      <WorkshopsSlider />
       <StudioSection />
-      <Gallery />
-      <Testimonials />
-      <BookingCTA />
+      <Reviews />
+      <Journal />
     </>
   );
 }

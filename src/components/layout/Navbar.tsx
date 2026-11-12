@@ -1,81 +1,62 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Logo from "@/components/ui/Logo";
-import Button from "@/components/ui/Button";
-import { navLinks } from "@/data/navigation";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { getNavLinks } from "@/data/site";
+import { useT } from "@/i18n/LanguageContext";
+
+/** Pages that open with a dark photo hero get the white logo. */
+const darkHeroPattern = /^\/($|workshops|about|contact|private-workshops)/;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const location = useLocation();
-  const close = () => setOpen(false);
+  const { pathname } = useLocation();
+  const t = useT();
+  const navLinks = getNavLinks(t);
+  const onDarkHero = darkHeroPattern.test(pathname);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-40 px-4 pt-3 sm:px-6 sm:pt-4 lg:px-[85px] lg:pt-[17px]">
-      <nav
-        className="mx-auto flex h-[60px] max-w-[1270px] items-center justify-between rounded-[16px] border border-white/60 bg-ivory/90 pl-4 pr-2 shadow-nav backdrop-blur-md sm:pl-6 lg:h-[76px] lg:rounded-[18px] lg:pl-[26px] lg:pr-[12px]"
-        aria-label="Primary"
-      >
-        <Logo iconClassName="h-[42px] w-[42px]" textClassName="text-[23px] font-semibold" />
+    <div className="absolute inset-x-0 top-0 z-40">
+      {/* Logo hugs the left edge, the menu bar hugs the right edge, like the reference */}
+      <div className="flex items-start justify-between pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-10 lg:pr-0">
+        <div className="pt-4">
+          <Logo tone={onDarkHero ? "light" : "dark"} size={112} className="lg:hidden" />
+          <Logo tone={onDarkHero ? "light" : "dark"} size={140} className="hidden lg:inline-block" />
+        </div>
 
-        <ul className="hidden items-center gap-[30px] lg:flex xl:gap-[38px]">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) =>
-                  [
-                    "font-sans text-[15px] font-medium transition duration-300 ease-out hover:text-forest",
-                    isActive && location.pathname === link.to ? "text-forest" : "text-ink/85",
-                  ].join(" ")
-                }
-              >
+        <nav aria-label="Primary" className="hidden items-stretch bg-white pl-2 lg:flex">
+          {navLinks.map((link, index) => (
+            <Fragment key={link.label}>
+              {index > 0 && <span aria-hidden="true" className="self-center h-[5px] w-[5px] rounded-full bg-green-olive/60" />}
+              <NavLink to={link.to} className={({ isActive }) => ["flex items-center px-[20px] py-4 font-sans text-[17px] leading-[28px] text-green transition hover:text-tomato xl:text-[17.6px]", isActive ? "text-tomato" : ""].join(" ")}>
                 {link.label}
               </NavLink>
-            </li>
+            </Fragment>
           ))}
-        </ul>
+          <NavLink to="/contact" className="ml-2 flex items-center bg-green px-4 py-4 font-sans text-[17px] leading-[28px] text-white transition hover:bg-tomato xl:text-[17.6px]">
+            {t.nav.contact}
+          </NavLink>
+          <LanguageSwitcher variant="toggle" />
+        </nav>
 
-        <div className="flex items-center gap-2">
-          <Button to="/workshops" size="sm" className="hidden h-[46px] px-[32px] text-[14.5px] lg:inline-flex">
-            Book a Workshop
-          </Button>
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-pill text-forest transition hover:bg-forest/5 lg:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        <div className="mt-4 flex items-center gap-2 lg:hidden">
+          <LanguageSwitcher variant="pill" />
+          <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? t.nav.closeMenu : t.nav.openMenu} className="inline-flex h-12 w-12 items-center justify-center bg-green text-white">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
-      </nav>
+      </div>
 
       {open && (
-        <div
-          id="mobile-menu"
-          className="mx-auto mt-2 max-w-[1270px] rounded-[16px] border border-white/60 bg-ivory p-4 shadow-panel lg:hidden"
-        >
-          <ul className="flex flex-col">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <NavLink
-                  to={link.to}
-                  onClick={close}
-                  className="block rounded-[10px] px-3 py-3 font-sans text-[15px] font-medium text-ink transition hover:bg-cream hover:text-forest"
-                >
-                  {link.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <Button to="/workshops" onClick={close} fullWidth className="mt-3">
-            Book a Workshop
-          </Button>
-        </div>
+        <nav id="mobile-nav" aria-label="Mobile" className="mx-4 mt-2 bg-white shadow-float sm:mx-6 lg:hidden">
+          {[...navLinks, { label: t.nav.contact, to: "/contact" }].map((link) => (
+            <NavLink key={link.label} to={link.to} onClick={() => setOpen(false)} className="block border-b border-green/10 px-5 py-4 font-sans text-[17px] text-green last:border-0 hover:text-tomato">
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
       )}
-    </header>
+    </div>
   );
 }

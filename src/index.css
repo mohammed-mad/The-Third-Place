@@ -1,62 +1,65 @@
 @font-face {
-  font-family: 'DM Sans';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  font-optical-sizing: auto;
-  src: url('./assets/fonts/dm-sans-400-italic.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'DM Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  font-optical-sizing: auto;
-  src: url('./assets/fonts/dm-sans-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'DM Sans';
+  font-family: 'Caveat';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  font-optical-sizing: auto;
-  src: url('./assets/fonts/dm-sans-500.woff2') format('woff2');
+  src: url('./assets/fonts/caveat-500.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'DM Sans';
+  font-family: 'Caveat';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  font-optical-sizing: auto;
-  src: url('./assets/fonts/dm-sans-600.woff2') format('woff2');
+  src: url('./assets/fonts/caveat-600.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'EB Garamond';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url('./assets/fonts/eb-garamond-400-italic.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'EB Garamond';
+  font-family: 'Manrope';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./assets/fonts/eb-garamond-400.woff2') format('woff2');
+  src: url('./assets/fonts/manrope-400.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'EB Garamond';
+  font-family: 'Manrope';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./assets/fonts/eb-garamond-500.woff2') format('woff2');
+  src: url('./assets/fonts/manrope-500.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'EB Garamond';
+  font-family: 'Manrope';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('./assets/fonts/eb-garamond-600.woff2') format('woff2');
+  src: url('./assets/fonts/manrope-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/manrope-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('./assets/fonts/manrope-800.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/oswald-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/oswald-600.woff2') format('woff2');
 }
 
 @tailwind base;
@@ -70,27 +73,65 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-ivory font-sans text-ink antialiased;
+    @apply bg-beige font-sans text-body text-green-olive;
   }
   ::selection {
-    @apply bg-forest text-ivory;
+    @apply bg-orange text-ink;
   }
   :focus-visible {
-    @apply outline-none ring-2 ring-forest ring-offset-2 ring-offset-ivory;
+    @apply outline-none ring-2 ring-tomato ring-offset-2 ring-offset-beige;
   }
 }
 
 @layer components {
-  .page-container {
-    @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-[52px];
+  .page-padding {
+    @apply px-4 sm:px-6 lg:px-10;
   }
-  .eyebrow {
-    @apply font-sans text-eyebrow uppercase;
+  .page-container {
+    @apply mx-auto w-full max-w-content page-padding;
+  }
+  /* Handwritten sub-title with the short dashes either side */
+  .script-title {
+    @apply inline-flex items-center gap-4 font-script text-script text-orange;
+  }
+  .script-title::before,
+  .script-title::after {
+    content: "";
+    @apply h-[2px] w-6 bg-orange;
+  }
+  /* Condensed uppercase display headline */
+  .display {
+    @apply font-display uppercase tracking-[0.005em];
+  }
+  /* Short underline accent under a word in a heading */
+  .underline-accent {
+    background-image: linear-gradient(to right, #F25742, #F25742);
+    background-repeat: no-repeat;
+    background-size: 100% 3px;
+    background-position: 0 100%;
+    padding-bottom: 4px;
+  }
+  .dotted-bg {
+    @apply bg-dots bg-dots;
   }
   .no-scrollbar {
     scrollbar-width: none;
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+  /* Rough "torn" edge between beige and green sections */
+  .rough-edge-top {
+    position: relative;
+  }
+  .rough-edge-top::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -14px;
+    height: 16px;
+    background-color: inherit;
+    clip-path: polygon(0 100%, 2% 40%, 5% 70%, 9% 30%, 13% 60%, 17% 20%, 21% 65%, 25% 35%, 29% 75%, 33% 25%, 37% 60%, 41% 30%, 45% 70%, 49% 20%, 53% 65%, 57% 40%, 61% 75%, 65% 30%, 69% 60%, 73% 25%, 77% 70%, 81% 35%, 85% 65%, 89% 20%, 93% 60%, 97% 35%, 100% 70%, 100% 100%);
   }
 }
